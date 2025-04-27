@@ -1,1 +1,2 @@
-com\auth\AutenticadorApplicationTests.class
+com\auth\AuthTokenServiceApplicationTests.class
+com\auth\test\TokenServiceTest.class

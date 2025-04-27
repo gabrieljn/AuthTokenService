@@ -1,4 +1,3 @@
-com\auth\service\AutenticacaoService.class
-com\auth\dto\LoginDto.class
-com\auth\security\SegurancaConfig.class
-com\auth\domain\Usuario.class
+com\auth\AuthTokenServiceApplication.class
+com\auth\security\SecurityConfig.class
+com\auth\service\TokenService.class
