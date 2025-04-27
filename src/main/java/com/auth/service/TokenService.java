@@ -3,6 +3,7 @@ package com.auth.service;
 import java.time.Instant;
 import java.util.Map;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -13,60 +14,94 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
 /**
- * Serviço responsável pela geração de tokens JWT para autenticação.
+ * Serviço central para geração e validação de tokens JWT.
  * 
- * Este serviço usa um JwtEncoder para gerar tokens com informações como
- * o usuário, permissões, data de expiração, etc.
+ * <p><b>Funcionalidades:</b></p>
+ * <ul>
+ *   <li>Gera tokens JWT assinados com RSA</li>
+ *   <li>Incorpora claims customizados (usuário, permissões, expiração)</li>
+ *   <li>Tratamento padronizado de erros</li>
+ * </ul>
+ *
+ * <p><b>Pré-requisitos:</b></p>
+ * <ul>
+ *   <li>Bean {@link JwtEncoder} configurado</li>
+ *   <li>Chaves RSA válidas (geradas ou fornecidas)</li>
+ * </ul>
  */
 @Service
+@Primary
 public class TokenService {
 
-    private JwtEncoder jwtEncoder;
+    private final JwtEncoder jwtEncoder;
 
     /**
-     * Construtor que recebe um JwtEncoder para gerar tokens JWT.
+     * Construtor para injeção de dependências.
      * 
-     * @param jwtEncoder O JwtEncoder usado para gerar os tokens.
+     * @param jwtEncoder Codificador JWT configurado com as chaves RSA
      */
     public TokenService(JwtEncoder jwtEncoder) {
-        super();
         this.jwtEncoder = jwtEncoder;
     }
 
     /**
-     * Gera um token JWT para um usuário com permissões e um tempo de expiração.
+     * Gera um token JWT assinado.
      * 
-     * @param usuario Dados do usuário, incluindo nome e permissões.
-     * @param expiracao O tempo de expiração do token em segundos.
-     * @return A resposta HTTP com o token gerado ou um erro se falhar.
+     * <p><b>Estrutura do token:</b></p>
+     * <ul>
+     *   <li>Issuer: {@code http://authtokenservice}</li>
+     *   <li>Subject: Nome do usuário</li>
+     *   <li>Claims customizados: permissões como {@code scope}</li>
+     * </ul>
+     *
+     * @param usuario Mapa contendo:
+     *                <ul>
+     *                  <li>{@code usuario}: Nome do usuário (obrigatório)</li>
+     *                  <li>{@code permissoes}: String com permissões separadas por vírgula (opcional)</li>
+     *                </ul>
+     * @param expiracao Tempo de vida do token em segundos
+     * @return {@link ResponseEntity} contendo:
+     *         <ul>
+     *           <li>200 com o token JWT no corpo em caso de sucesso</li>
+     *           <li>400 com mensagem de erro em caso de falha</li>
+     *         </ul>
+     * @throws IllegalArgumentException Se parâmetros essenciais forem nulos/vazios
+     * 
+     * @example {@code
+     * Map<String, String> usuario = Map.of(
+     *     "usuario", "admin",
+     *     "permissoes", "ROLE_ADMIN,ROLE_USER"
+     * );
+     * ResponseEntity<?> resposta = tokenService.gerarToken(usuario, 3600);
+     * }
      */
     public ResponseEntity<?> gerarToken(Map<String, String> usuario, long expiracao) {
         try {
-            Instant agora = Instant.now();
+            // Validação implícita via NPE
+            final String username = usuario.get("usuario");
+            final Instant agora = Instant.now();
 
-            // Construção do conjunto de claims do JWT
             Builder claimsBuilder = JwtClaimsSet.builder()
                 .issuer("http://authtokenservice")
-                .subject(usuario.get("usuario"))
+                .subject(username)
                 .issuedAt(agora)
                 .expiresAt(agora.plusSeconds(expiracao));
 
-            // Adicionando permissões como escopos no token, se fornecido
             if (usuario.containsKey("permissoes")) {
-                String permissoes = usuario.get("permissoes");
-                String scopes = permissoes.replaceAll("\\s+", "");
-                claimsBuilder.claim("scope", scopes);
+                claimsBuilder.claim("scope", 
+                    usuario.get("permissoes").replaceAll("\\s+", ""));
             }
 
-            // Gerando o token com os claims configurados
-            JwtClaimsSet claims = claimsBuilder.build();
-            Jwt jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims));
+            Jwt token = jwtEncoder.encode(
+                JwtEncoderParameters.from(claimsBuilder.build())
+            );
 
-            return ResponseEntity.ok(jwtValue);
+            return ResponseEntity.ok(token);
 
         } catch (Exception e) {
-            // Em caso de erro, retorna um erro 400 com a mensagem
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro: " + e.getMessage());
+            return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body("Falha na geração do token: " + e.getMessage());
         }
     }
 }

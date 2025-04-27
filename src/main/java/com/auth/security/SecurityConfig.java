@@ -6,8 +6,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,78 +21,88 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-import org.springframework.stereotype.Component;
 
+import com.auth.service.TokenService;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 
 /**
- * Configuração de segurança da aplicação, incluindo a configuração de JWT para
- * autenticação e autorização de usuários.
+ * Configuração automática de segurança para aplicações Spring Boot.
  * 
- * Configura o filtro de segurança da aplicação, os decodificadores e
- * codificadores de JWT e as rotas públicas e privadas.
+ * <p>Fornece:</p>
+ * <ul>
+ *   <li>Configuração JWT com chaves RSA</li>
+ *   <li>Proteção de rotas com OAuth2 Resource Server</li>
+ *   <li>Injeção automática do TokenService</li>
+ * </ul>
+ * 
+ * <p><b>Pré-requisitos:</b></p>
+ * <ul>
+ *   <li>Properties <code>jwt.public.key</code> e <code>jwt.private.key</code> configuradas</li>
+ *   <li>Bean <code>List<RequestMatcher> rotasPublicas</code> definido no projeto consumidor</li>
+ * </ul>
  */
 @Configuration
+@AutoConfiguration // Habilita auto-configuração Spring Boot 3+
 @EnableWebSecurity
-@Component
 public class SecurityConfig {
 
-	@Value("${jwt.public.key}")
-	private RSAPublicKey chavePublica;
+    @Value("${jwt.public.key}")
+    private RSAPublicKey chavePublica;
 
-	@Value("${jwt.private.key}")
-	private RSAPrivateKey chavePrivada;
+    @Value("${jwt.private.key}")
+    private RSAPrivateKey chavePrivada;
 
-	/**
-	 * Cria um bean JwtDecoder para decodificar tokens JWT usando a chave pública.
-	 * 
-	 * @return O JwtDecoder configurado para usar a chave pública.
-	 */
-	@Bean
-	JwtDecoder jwtDecoder() {
-		return NimbusJwtDecoder.withPublicKey(chavePublica).build();
-	}
+    /**
+     * Configura o decodificador JWT com a chave pública RSA.
+     */
+    @Bean
+    JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withPublicKey(chavePublica).build();
+    }
 
-	/**
-	 * Cria um bean JwtEncoder para codificar tokens JWT usando a chave privada e
-	 * pública.
-	 * 
-	 * @return O JwtEncoder configurado para usar as chaves RSA.
-	 */
-	@Bean
-	JwtEncoder jwtEncoder() {
-		JWK jwk = new RSAKey.Builder(this.chavePublica).privateKey(chavePrivada).build();
-		var jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
-		return new NimbusJwtEncoder(jwks);
-	}
+    /**
+     * Fornece uma implementação padrão do TokenService caso nenhuma seja definida.
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    TokenService tokenService(JwtEncoder jwtEncoder) {
+        return new TokenService(jwtEncoder);
+    }
 
-	/**
-	 * Configura as rotas públicas e privadas da aplicação, além da autenticação
-	 * baseada em JWT.
-	 * 
-	 * @param http          O objeto HttpSecurity para configurar as regras de
-	 *                      segurança.
-	 * @param rotasPublicas A lista de rotas públicas que não necessitam de
-	 *                      autenticação.
-	 * @return O SecurityFilterChain configurado.
-	 * @throws Exception Caso ocorra algum erro durante a configuração.
-	 */
-	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http,
-			@Qualifier("rotasPublicas") List<RequestMatcher> rotasPublicas) throws Exception {
-		http.csrf(csrf -> csrf.disable())
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())).authorizeHttpRequests(auth -> {
+    /**
+     * Configura o codificador JWT com par de chaves RSA.
+     */
+    @Bean
+    JwtEncoder jwtEncoder() {
+        JWK jwk = new RSAKey.Builder(this.chavePublica)
+            .privateKey(chavePrivada)
+            .build();
+        return new NimbusJwtEncoder(new ImmutableJWKSet<>(new JWKSet(jwk)));
+    }
 
-					rotasPublicas.forEach(matcher -> auth.requestMatchers(matcher).permitAll());
-					auth.anyRequest().authenticated();
+    /**
+     * Configura a cadeia de filtros de segurança.
+     * 
+     * @param rotasPublicas Deve ser fornecido pelo projeto consumidor via @Bean
+     */
+    @Bean
+    SecurityFilterChain securityFilterChain(
+        HttpSecurity http, 
+        @Qualifier("rotasPublicas") List<RequestMatcher> rotasPublicas
+    ) throws Exception {
+        http
+            .csrf(Customizer.withDefaults())
+            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> {
+                auth.requestMatchers(HttpMethod.OPTIONS).permitAll();
+                rotasPublicas.forEach(matcher -> auth.requestMatchers(matcher).permitAll());
+                auth.anyRequest().authenticated();
+            })
+            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
-				});
-
-		return http.build();
-	}
-
+        return http.build();
+    }
 }

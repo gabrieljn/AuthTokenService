@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"com.auth","l":"AuthTokenServiceApplication"},{"p":"com.auth.security","l":"SecurityConfig"},{"p":"com.auth.service","l":"TokenService"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"com.auth","l":"AuthTokenServiceApplication"},{"p":"com.auth.security","l":"SecurityAutoConfiguration"},{"p":"com.auth.security","l":"SecurityConfig"},{"p":"com.auth.service","l":"TokenService"}];updateSearchResults();
