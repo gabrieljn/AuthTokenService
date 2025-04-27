@@ -1,3 +1,7 @@
+#Chaves
+src/main/resources/app.pub
+src/main/resources/app.key
+
 # Compiled class file
 *.class
 
