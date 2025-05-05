@@ -29,7 +29,7 @@ Adicione a seguinte dependência no seu `pom.xml`:
 <dependency>
     <groupId>io.github.gabrieljn</groupId>
     <artifactId>AuthTokenService</artifactId>
-    <version>1.5</version>
+    <version>1.6</version>
 </dependency>
 ```
 
