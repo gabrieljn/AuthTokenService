@@ -22,11 +22,11 @@
 'UTF-8'
 -Xdoclint:none
 -doctitle
-'AuthTokenService 1.3 API'
+'AuthTokenService 1.5 API'
 -use
 -version
 -windowtitle
-'AuthTokenService 1.3 API'
+'AuthTokenService 1.5 API'
 com.auth
 com.auth.security
 com.auth.service
@@ -76,21 +76,21 @@ C:\Users\crfte\.m2\repository\org\slf4j\slf4j-api\2.0.17\slf4j-api-2.0.17.jar = 
 C:\Users\crfte\.m2\repository\org\springframework\spring-core\6.2.6\spring-core-6.2.6.jar = 1745729443473
 C:\Users\crfte\.m2\repository\org\springframework\spring-jcl\6.2.6\spring-jcl-6.2.6.jar = 1745729443310
 C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\src\main\java = 1745715602870
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\generated-sources\annotations = 1745784916506
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\allclasses-index.html = 1745784923557
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\allpackages-index.html = 1745784923560
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\element-list = 1745784923483
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\help-doc.html = 1745784923575
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\index-all.html = 1745784923570
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\index.html = 1745784923545
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\jquery-ui.overrides.css = 1745784923587
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\member-search-index.js = 1745784923562
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\module-search-index.js = 1745784923560
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\overview-summary.html = 1745784923572
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\overview-tree.html = 1745784923541
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\package-search-index.js = 1745784923561
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\script.js = 1745784923578
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\search.js = 1745784923580
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\stylesheet.css = 1745784923577
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\tag-search-index.js = 1745784923563
-C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\type-search-index.js = 1745784923562
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\generated-sources\annotations = 1746404940740
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\allclasses-index.html = 1746404949885
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\allpackages-index.html = 1746404949887
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\element-list = 1746404949819
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\help-doc.html = 1746404949904
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\index-all.html = 1746404949899
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\index.html = 1746404949875
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\jquery-ui.overrides.css = 1746404949915
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\member-search-index.js = 1746404949891
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\module-search-index.js = 1746404949889
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\overview-summary.html = 1746404949901
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\overview-tree.html = 1746404949872
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\package-search-index.js = 1746404949890
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\script.js = 1746404949906
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\search.js = 1746404949908
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\stylesheet.css = 1746404949905
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\tag-search-index.js = 1746404949892
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\type-search-index.js = 1746404949891
