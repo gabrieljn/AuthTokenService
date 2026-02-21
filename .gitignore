@@ -1,3 +1,6 @@
+#Chave privada
+src/main/resources/keys/app.key
+
 # Compiled class file
 *.class
 

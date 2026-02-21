@@ -1,0 +1,3 @@
+com\auth\AuthTokenServiceApplication.class
+com\auth\security\SecurityConfig.class
+com\auth\service\TokenService.class

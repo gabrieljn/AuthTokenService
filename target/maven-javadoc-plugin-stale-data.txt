@@ -1,0 +1,100 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+-classpath
+'C:/Users/crfte/.m2/repository/org/springframework/boot/spring-boot-starter-security/3.5.7/spring-boot-starter-security-3.5.7.jar;C:/Users/crfte/.m2/repository/org/springframework/boot/spring-boot-starter/3.5.7/spring-boot-starter-3.5.7.jar;C:/Users/crfte/.m2/repository/org/springframework/boot/spring-boot/3.5.7/spring-boot-3.5.7.jar;C:/Users/crfte/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/3.5.7/spring-boot-autoconfigure-3.5.7.jar;C:/Users/crfte/.m2/repository/org/springframework/boot/spring-boot-starter-logging/3.5.7/spring-boot-starter-logging-3.5.7.jar;C:/Users/crfte/.m2/repository/ch/qos/logback/logback-classic/1.5.20/logback-classic-1.5.20.jar;C:/Users/crfte/.m2/repository/ch/qos/logback/logback-core/1.5.20/logback-core-1.5.20.jar;C:/Users/crfte/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.24.3/log4j-to-slf4j-2.24.3.jar;C:/Users/crfte/.m2/repository/org/apache/logging/log4j/log4j-api/2.24.3/log4j-api-2.24.3.jar;C:/Users/crfte/.m2/repository/org/slf4j/jul-to-slf4j/2.0.17/jul-to-slf4j-2.0.17.jar;C:/Users/crfte/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar;C:/Users/crfte/.m2/repository/org/yaml/snakeyaml/2.4/snakeyaml-2.4.jar;C:/Users/crfte/.m2/repository/org/springframework/spring-aop/6.2.12/spring-aop-6.2.12.jar;C:/Users/crfte/.m2/repository/org/springframework/spring-beans/6.2.12/spring-beans-6.2.12.jar;C:/Users/crfte/.m2/repository/org/springframework/security/spring-security-config/6.5.6/spring-security-config-6.5.6.jar;C:/Users/crfte/.m2/repository/org/springframework/spring-context/6.2.12/spring-context-6.2.12.jar;C:/Users/crfte/.m2/repository/org/springframework/security/spring-security-web/6.5.6/spring-security-web-6.5.6.jar;C:/Users/crfte/.m2/repository/org/springframework/spring-expression/6.2.12/spring-expression-6.2.12.jar;C:/Users/crfte/.m2/repository/org/springframework/boot/spring-boot-starter-web/3.5.7/spring-boot-starter-web-3.5.7.jar;C:/Users/crfte/.m2/repository/org/springframework/boot/spring-boot-starter-json/3.5.7/spring-boot-starter-json-3.5.7.jar;C:/Users/crfte/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.19.2/jackson-datatype-jdk8-2.19.2.jar;C:/Users/crfte/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.19.2/jackson-datatype-jsr310-2.19.2.jar;C:/Users/crfte/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.19.2/jackson-module-parameter-names-2.19.2.jar;C:/Users/crfte/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/3.5.7/spring-boot-starter-tomcat-3.5.7.jar;C:/Users/crfte/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.48/tomcat-embed-core-10.1.48.jar;C:/Users/crfte/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/10.1.48/tomcat-embed-el-10.1.48.jar;C:/Users/crfte/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.48/tomcat-embed-websocket-10.1.48.jar;C:/Users/crfte/.m2/repository/org/springframework/spring-web/6.2.12/spring-web-6.2.12.jar;C:/Users/crfte/.m2/repository/io/micrometer/micrometer-observation/1.15.5/micrometer-observation-1.15.5.jar;C:/Users/crfte/.m2/repository/io/micrometer/micrometer-commons/1.15.5/micrometer-commons-1.15.5.jar;C:/Users/crfte/.m2/repository/org/springframework/spring-webmvc/6.2.12/spring-webmvc-6.2.12.jar;C:/Users/crfte/.m2/repository/org/springframework/boot/spring-boot-starter-oauth2-resource-server/3.5.7/spring-boot-starter-oauth2-resource-server-3.5.7.jar;C:/Users/crfte/.m2/repository/org/springframework/security/spring-security-core/6.5.6/spring-security-core-6.5.6.jar;C:/Users/crfte/.m2/repository/org/springframework/security/spring-security-crypto/6.5.6/spring-security-crypto-6.5.6.jar;C:/Users/crfte/.m2/repository/org/springframework/security/spring-security-oauth2-resource-server/6.5.6/spring-security-oauth2-resource-server-6.5.6.jar;C:/Users/crfte/.m2/repository/org/springframework/security/spring-security-oauth2-core/6.5.6/spring-security-oauth2-core-6.5.6.jar;C:/Users/crfte/.m2/repository/org/springframework/security/spring-security-oauth2-jose/6.5.6/spring-security-oauth2-jose-6.5.6.jar;C:/Users/crfte/.m2/repository/com/nimbusds/nimbus-jose-jwt/9.37.4/nimbus-jose-jwt-9.37.4.jar;C:/Users/crfte/.m2/repository/com/github/stephenc/jcip/jcip-annotations/1.0-1/jcip-annotations-1.0-1.jar;C:/Users/crfte/.m2/repository/org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar;C:/Users/crfte/.m2/repository/org/springframework/spring-core/6.2.12/spring-core-6.2.12.jar;C:/Users/crfte/.m2/repository/org/springframework/spring-jcl/6.2.12/spring-jcl-6.2.12.jar;C:/Users/crfte/.m2/repository/com/auth0/java-jwt/4.5.0/java-jwt-4.5.0.jar;C:/Users/crfte/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.19.2/jackson-core-2.19.2.jar;C:/Users/crfte/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.19.2/jackson-databind-2.19.2.jar;C:/Users/crfte/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.19.2/jackson-annotations-2.19.2.jar'
+-encoding
+'UTF-8'
+-protected
+--release
+17
+-sourcepath
+'C:/Users/crfte/OneDrive/Documentos/WorkSpace/Back-End/AuthTokenService/src/main/java;C:/Users/crfte/OneDrive/Documentos/WorkSpace/Back-End/AuthTokenService/target/generated-sources/annotations'
+-author
+-bottom
+'Copyright &#169; 2026. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/crfte/OneDrive/Documentos/WorkSpace/Back-End/AuthTokenService/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-Xdoclint:none
+-doctitle
+'AuthTokenService 1.7 API'
+-use
+-version
+-windowtitle
+'AuthTokenService 1.7 API'
+com.auth
+com.auth.security
+com.auth.service
+C:\Users\crfte\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.5.7\spring-boot-starter-security-3.5.7.jar = 1762180167109
+C:\Users\crfte\.m2\repository\org\springframework\boot\spring-boot-starter\3.5.7\spring-boot-starter-3.5.7.jar = 1762180161811
+C:\Users\crfte\.m2\repository\org\springframework\boot\spring-boot\3.5.7\spring-boot-3.5.7.jar = 1762180165050
+C:\Users\crfte\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.5.7\spring-boot-autoconfigure-3.5.7.jar = 1762180165897
+C:\Users\crfte\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.5.7\spring-boot-starter-logging-3.5.7.jar = 1762180161800
+C:\Users\crfte\.m2\repository\ch\qos\logback\logback-classic\1.5.20\logback-classic-1.5.20.jar = 1762180161883
+C:\Users\crfte\.m2\repository\ch\qos\logback\logback-core\1.5.20\logback-core-1.5.20.jar = 1762180161856
+C:\Users\crfte\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.24.3\log4j-to-slf4j-2.24.3.jar = 1739924878276
+C:\Users\crfte\.m2\repository\org\apache\logging\log4j\log4j-api\2.24.3\log4j-api-2.24.3.jar = 1739924878582
+C:\Users\crfte\.m2\repository\org\slf4j\jul-to-slf4j\2.0.17\jul-to-slf4j-2.0.17.jar = 1743696662669
+C:\Users\crfte\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar = 1717974354860
+C:\Users\crfte\.m2\repository\org\yaml\snakeyaml\2.4\snakeyaml-2.4.jar = 1753242248810
+C:\Users\crfte\.m2\repository\org\springframework\spring-aop\6.2.12\spring-aop-6.2.12.jar = 1762180163262
+C:\Users\crfte\.m2\repository\org\springframework\spring-beans\6.2.12\spring-beans-6.2.12.jar = 1762180163727
+C:\Users\crfte\.m2\repository\org\springframework\security\spring-security-config\6.5.6\spring-security-config-6.5.6.jar = 1762180168274
+C:\Users\crfte\.m2\repository\org\springframework\spring-context\6.2.12\spring-context-6.2.12.jar = 1762180163527
+C:\Users\crfte\.m2\repository\org\springframework\security\spring-security-web\6.5.6\spring-security-web-6.5.6.jar = 1762180167524
+C:\Users\crfte\.m2\repository\org\springframework\spring-expression\6.2.12\spring-expression-6.2.12.jar = 1762180164083
+C:\Users\crfte\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.5.7\spring-boot-starter-web-3.5.7.jar = 1762180163673
+C:\Users\crfte\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.5.7\spring-boot-starter-json-3.5.7.jar = 1762180163710
+C:\Users\crfte\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.19.2\jackson-datatype-jdk8-2.19.2.jar = 1756692473824
+C:\Users\crfte\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.19.2\jackson-datatype-jsr310-2.19.2.jar = 1756692473880
+C:\Users\crfte\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.19.2\jackson-module-parameter-names-2.19.2.jar = 1756692473916
+C:\Users\crfte\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.5.7\spring-boot-starter-tomcat-3.5.7.jar = 1762180165139
+C:\Users\crfte\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.48\tomcat-embed-core-10.1.48.jar = 1762180166304
+C:\Users\crfte\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.48\tomcat-embed-el-10.1.48.jar = 1762180165380
+C:\Users\crfte\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.48\tomcat-embed-websocket-10.1.48.jar = 1762180165656
+C:\Users\crfte\.m2\repository\org\springframework\spring-web\6.2.12\spring-web-6.2.12.jar = 1762180164965
+C:\Users\crfte\.m2\repository\io\micrometer\micrometer-observation\1.15.5\micrometer-observation-1.15.5.jar = 1762180163772
+C:\Users\crfte\.m2\repository\io\micrometer\micrometer-commons\1.15.5\micrometer-commons-1.15.5.jar = 1762180163792
+C:\Users\crfte\.m2\repository\org\springframework\spring-webmvc\6.2.12\spring-webmvc-6.2.12.jar = 1762180164117
+C:\Users\crfte\.m2\repository\org\springframework\boot\spring-boot-starter-oauth2-resource-server\3.5.7\spring-boot-starter-oauth2-resource-server-3.5.7.jar = 1762180167451
+C:\Users\crfte\.m2\repository\org\springframework\security\spring-security-core\6.5.6\spring-security-core-6.5.6.jar = 1762180167900
+C:\Users\crfte\.m2\repository\org\springframework\security\spring-security-crypto\6.5.6\spring-security-crypto-6.5.6.jar = 1762180167617
+C:\Users\crfte\.m2\repository\org\springframework\security\spring-security-oauth2-resource-server\6.5.6\spring-security-oauth2-resource-server-6.5.6.jar = 1762180167617
+C:\Users\crfte\.m2\repository\org\springframework\security\spring-security-oauth2-core\6.5.6\spring-security-oauth2-core-6.5.6.jar = 1762180167730
+C:\Users\crfte\.m2\repository\org\springframework\security\spring-security-oauth2-jose\6.5.6\spring-security-oauth2-jose-6.5.6.jar = 1762180167705
+C:\Users\crfte\.m2\repository\com\nimbusds\nimbus-jose-jwt\9.37.4\nimbus-jose-jwt-9.37.4.jar = 1762180167936
+C:\Users\crfte\.m2\repository\com\github\stephenc\jcip\jcip-annotations\1.0-1\jcip-annotations-1.0-1.jar = 1743702874889
+C:\Users\crfte\.m2\repository\org\slf4j\slf4j-api\2.0.17\slf4j-api-2.0.17.jar = 1743696663383
+C:\Users\crfte\.m2\repository\org\springframework\spring-core\6.2.12\spring-core-6.2.12.jar = 1762180166962
+C:\Users\crfte\.m2\repository\org\springframework\spring-jcl\6.2.12\spring-jcl-6.2.12.jar = 1762180166731
+C:\Users\crfte\.m2\repository\com\auth0\java-jwt\4.5.0\java-jwt-4.5.0.jar = 1762319568111
+C:\Users\crfte\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.19.2\jackson-core-2.19.2.jar = 1756692473938
+C:\Users\crfte\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.19.2\jackson-databind-2.19.2.jar = 1756692473919
+C:\Users\crfte\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.19.2\jackson-annotations-2.19.2.jar = 1756692473777
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\src\main\java = 1745715602870
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\generated-sources\annotations = 1771691464397
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\allclasses-index.html = 1771691473272
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\allpackages-index.html = 1771691473275
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\copy.svg = 1771691473299
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\element-list = 1771691473195
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\help-doc.html = 1771691473293
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\index-all.html = 1771691473285
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\index.html = 1771691473261
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\link.svg = 1771691473301
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\member-search-index.js = 1771691473278
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\module-search-index.js = 1771691473276
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\overview-summary.html = 1771691473289
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\overview-tree.html = 1771691473257
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\package-search-index.js = 1771691473277
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\script.js = 1771691473298
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\search-page.js = 1771691473305
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\search.html = 1771691473287
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\search.js = 1771691473303
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\stylesheet.css = 1771691473297
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\tag-search-index.js = 1771691473278
+C:\Users\crfte\OneDrive\Documentos\WorkSpace\Back-End\AuthTokenService\target\reports\apidocs\type-search-index.js = 1771691473277
