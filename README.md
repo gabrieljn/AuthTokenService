@@ -1,88 +1,89 @@
-# 🔐 AuthTokenService
+🔐 AuthTokenService
 
-Fornece uma configuração automática de segurança baseada em **JWT com chaves RSA** para aplicações Spring Boot 3+.  
-Ela oferece geração e validação de tokens seguros, com autenticação stateless, e permite fácil customização de rotas públicas.
+Biblioteca de segurança para Spring Boot 3+ com autenticação baseada em JWT assinado com HMAC SHA-256 (HS256).
 
-**Versão funcional: 1.6**
+Fornece geração e validação de tokens utilizando chave simétrica, com autenticação stateless e integração automática com Spring Security.
 
-## ✨ Funcionalidades
+Versão atual: 1.7
 
-✅ Autoconfiguração de segurança com Spring Security  
-🔐 Geração de tokens JWT assinados com chave privada RSA  
-🔍 Validação de tokens JWT com chave pública RSA  
-🛡️ Proteção de rotas com OAuth2 Resource Server  
-🧩 Suporte a claims personalizados (usuário, permissões, expiração)  
-♻️ Stateless: sem uso de sessões ou cookies  
-⚙️ Possibilidade de sobrescrever o `TokenService` padrão  
+✨ Funcionalidades
 
-## 🧾 Pré-requisitos
+✅ Autoconfiguração de segurança com Spring Security
+🔐 Geração de JWT assinado com HMAC SHA-256 (HS256)
+🔍 Validação automática de token com chave simétrica
+🛡️ Integração com OAuth2 Resource Server
+🧩 Suporte a claims personalizadas (sub, scope, exp, etc.)
+♻️ Stateless (sem sessão ou cookies)
+⚙️ Permite sobrescrever o TokenService padrão
 
-- Java 17+  
-- Spring Boot 3.0+  
-- Par de chaves RSA (pública e privada)  
+🧾 Pré-requisitos
 
-## 📦 Instalação via Maven
+Java 17+
 
-Adicione a seguinte dependência no seu `pom.xml`:
+Spring Boot 3+
 
-```xml
+Chave secreta codificada em Base64
+
+📦 Instalação (Maven)
 <dependency>
     <groupId>io.github.gabrieljn</groupId>
     <artifactId>AuthTokenService</artifactId>
-    <version>1.6</version>
+    <version>1.7</version>
 </dependency>
-```
+⚙️ Configuração
+1️⃣ Definir chave secreta
 
-## ⚙️ Configuração
+No application.properties:
 
-### 1. Propriedades obrigatórias
+jwt.secret=<sua-chave-base64>
 
-Adicione as chaves RSA ao seu `application.properties`:
+A chave deve estar codificada em Base64 e será utilizada tanto para assinatura quanto para validação do token.
 
-```properties
-# application.properties
-jwt.public.key=<sua-chave-publica-em-PEM-ou-Java-encoded>
-jwt.private.key=<sua-chave-privada-em-PEM-ou-Java-encoded>
-```
+2️⃣ Definir rotas públicas
 
-### 2. Definir rotas públicas
+No projeto que consome a lib:
 
-No projeto que consome a lib, você deve registrar um bean com as rotas públicas da aplicação:
-
-```java
 @Bean
-public List<RequestMatcher> rotasPublicas() {
+public List<String> rotasPublicas() {
     return List.of(
-        new AntPathRequestMatcher("/login"),
-        new AntPathRequestMatcher("/public/**")
+        "/login",
+        "/public/**"
     );
 }
-```
 
-## 📤 Uso do TokenService
+Todas as demais rotas exigirão autenticação JWT automaticamente.
 
-### Geração de Token
+📤 Uso do TokenService
 
-O `TokenService` já vem injetado automaticamente. Para gerar um token:
+O TokenService é disponibilizado automaticamente como Bean.
 
-```java
+✅ Gerar token
 Map<String, String> usuario = Map.of(
     "usuario", "admin",
     "permissoes", "ROLE_ADMIN,ROLE_USER"
 );
 
-ResponseEntity<?> resposta = tokenService.gerarToken(usuario, 3600);
-```
+String token = tokenService.gerarToken(usuario, 3600);
+Claims geradas
+Claim	Descrição
+iss	Issuer fixo da aplicação
+sub	Valor da chave "usuario"
+iat	Data de emissão
+exp	Data de expiração
+scope	Permissões (opcional)
+🛡️ Segurança Aplicada
 
-## 🛡️ Segurança
+❌ CSRF desabilitado (API stateless)
 
-- ❌ CSRF desabilitado (por padrão)  
-- ✅ Permissão automática para requisições `OPTIONS` (suporte a CORS)  
-- 🔐 Qualquer rota não listada nas `rotasPublicas` exige autenticação  
+✅ SessionCreationPolicy.STATELESS
 
-## 🛠️ Exemplo de Integração
+✅ Permissão automática para requisições OPTIONS
 
-```java
+🔐 Todas as rotas não públicas exigem JWT válido
+
+🔑 Assinatura e validação usando mesma chave secreta (HS256)
+
+🛠️ Exemplo de Integração REST
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -95,16 +96,14 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> user) {
-        return tokenService.gerarToken(user, 3600);
+
+        String token = tokenService.gerarToken(user, 3600);
+
+        return ResponseEntity.ok(Map.of("token", token));
     }
 }
-```
-
-## 📦 Estrutura dos Beans
-
-| Bean                  | Tipo      | Finalidade                            |
-|-----------------------|-----------|---------------------------------------|
-| `TokenService`        | Singleton | Geração de tokens JWT                 |
-| `JwtEncoder`          | Singleton | Codificador JWT com chave RSA         |
-| `JwtDecoder`          | Singleton | Validador JWT com chave pública       |
-| `SecurityFilterChain` | Singleton | Filtro de segurança (rotas, JWT, etc) |
+📦 Beans Registrados
+Bean	Finalidade
+TokenService	Geração de tokens JWT
+JwtDecoder	Validação de tokens HS256
+SecurityFilterChain	Configuração de segurança
