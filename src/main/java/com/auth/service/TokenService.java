@@ -1,151 +1,76 @@
 package com.auth.service;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.Map;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet.Builder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 
 /**
- * Serviço central para geração e validação de tokens JWT.
- * 
- * <p>
- * <b>Funcionalidades:</b>
- * </p>
- * <ul>
- * <li>Gera tokens JWT assinados com RSA</li>
- * <li>Incorpora claims customizados (usuário, permissões, expiração)</li>
- * <li>Tratamento padronizado de erros</li>
- * </ul>
+ * Serviço responsável pela geração de tokens JWT assinados utilizando algoritmo
+ * HMAC SHA-256.
  *
- * <p>
- * <b>Pré-requisitos:</b>
- * </p>
- * <ul>
- * <li>Bean {@link JwtEncoder} configurado</li>
- * <li>Chaves RSA válidas (geradas ou fornecidas)</li>
- * </ul>
+ * Esta classe é independente de framework web e pode ser utilizada em qualquer
+ * aplicação Java.
  */
 public class TokenService {
 
-	private final JwtEncoder jwtEncoder;
+	private final Algorithm algorithm;
 
 	/**
-	 * Construtor para injeção de dependências.
-	 * 
-	 * @param jwtEncoder Codificador JWT configurado com as chaves RSA
+	 * Inicializa o serviço com chave simétrica em Base64.
+	 *
+	 * @param base64Secret chave secreta codificada em Base64
 	 */
-	public TokenService(JwtEncoder jwtEncoder) {
-		this.jwtEncoder = jwtEncoder;
+	public TokenService(String base64Secret) {
+		byte[] keyBytes = java.util.Base64.getDecoder().decode(base64Secret);
+		this.algorithm = Algorithm.HMAC256(keyBytes);
 	}
 
 	/**
-	 * Gera um token JWT assinado após validar parâmetros essenciais.
-	 * 
-	 * <p>
-	 * <b>Pré-condições:</b>
-	 * </p>
-	 * <ul>
-	 * <li>{@code usuario} não pode ser {@code null}</li>
-	 * <li>{@code usuario} deve conter a chave "usuario"</li>
-	 * <li>{@code expiracao} deve ser maior que zero</li>
-	 * </ul>
+	 * Gera um token JWT com base nos dados fornecidos.
 	 *
-	 * <p>
-	 * <b>Estrutura do token:</b>
-	 * </p>
-	 * <ul>
-	 * <li>Issuer: {@code http://authtokenservice}</li>
-	 * <li>Subject: Nome do usuário</li>
-	 * <li>Claims customizados: permissões como {@code scope}</li>
-	 * </ul>
-	 *
-	 * @param usuario   Mapa contendo:
-	 *                  <ul>
-	 *                  <li>{@code usuario} (obrigatório): Nome do usuário</li>
-	 *                  <li>{@code permissoes} (opcional): String com permissões
-	 *                  separadas por vírgula</li>
-	 *                  </ul>
-	 * @param expiracao Tempo de vida do token em segundos (deve ser positivo)
-	 * @return {@link ResponseEntity} contendo:
-	 *         <ul>
-	 *         <li>200 com o token JWT no corpo em caso de sucesso</li>
-	 *         <li>400 com mensagem específica em caso de:
-	 *         <ul>
-	 *         <li>Mapa de usuário nulo</li>
-	 *         <li>Chave "usuario" ausente</li>
-	 *         <li>Tempo de expiração inválido</li>
-	 *         <li>Erro na geração do token</li>
-	 *         </ul>
-	 *         </li>
-	 *         </ul>
-	 * @throws IllegalArgumentException Se {@code expiracao} ≤ 0
-	 * @throws NullPointerException     Se {@code usuario} for nulo ou sem chave
-	 *                                  "usuario"
-	 * 
-	 * @example {@code
-	 * // Uso válido
-	 * Map<String, String> usuario = Map.of(
-	 *     "usuario", "admin",
-	 *     "permissoes", "ROLE_ADMIN,ROLE_USER"
-	 * );
-	 * ResponseEntity<?> resposta = tokenService.gerarToken(usuario, 3600);
-	 * 
-	 * // Exemplo de erro
-	 * ResponseEntity<?> resposta = tokenService.gerarToken(null, 3600); 
-	 * // Retorna: HTTP 400 - "Mapa de usuário não pode ser nulo"
-	 * }
+	 * @param usuario           mapa contendo dados do usuário
+	 * @param expiracaoSegundos tempo de expiração em segundos
+	 * @return token JWT assinado
+	 * @throws IllegalArgumentException se os parâmetros forem inválidos
 	 */
-	public ResponseEntity<?> gerarToken(Map<String, String> usuario, long expiracao) {
+	public String gerarToken(Map<String, String> usuario, long expiracaoSegundos) {
 
-		// Validações explícitas (Fail Fast)
 		if (usuario == null) {
 
-			return ResponseEntity.badRequest().body("Map de usuário não pode ser nulo");
+			throw new IllegalArgumentException("Map de usuário não pode ser nulo");
 
 		}
 
 		if (!usuario.containsKey("usuario")) {
 
-			return ResponseEntity.badRequest().body("Chave 'usuario' é obrigatória");
+			throw new IllegalArgumentException("Chave 'usuario' é obrigatória");
 
 		}
 
-		if (expiracao <= 0) {
+		if (expiracaoSegundos <= 0) {
 
-			return ResponseEntity.badRequest().body("Expiração deve ser maior que zero");
-
-		}
-
-		try {
-
-			final String username = usuario.get("usuario");
-			final Instant agora = Instant.now();
-
-			Builder claimsBuilder = JwtClaimsSet.builder().issuer("http://authtokenservice").subject(username)
-					.issuedAt(agora).expiresAt(agora.plusSeconds(expiracao));
-
-			if (usuario.containsKey("permissoes")) {
-
-				claimsBuilder.claim("scope", usuario.get("permissoes").replaceAll("\\s+", ""));
-
-			}
-
-			Jwt token = jwtEncoder.encode(JwtEncoderParameters.from(claimsBuilder.build()));
-
-			return ResponseEntity.ok(token);
-
-		} catch (Exception e) {
-
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Falha na geração do token: " + e.getMessage());
+			throw new IllegalArgumentException("Expiração deve ser maior que zero");
 
 		}
 
+		final Instant agora = Instant.now();
+		final Date issuedAt = Date.from(agora);
+		final Date expiresAt = Date.from(agora.plusSeconds(expiracaoSegundos));
+
+		var builder = JWT.create().withIssuer("http://authtokenservice").withSubject(usuario.get("usuario"))
+				.withIssuedAt(issuedAt).withExpiresAt(expiresAt);
+
+		// Claim opcional de permissões
+		if (usuario.containsKey("permissoes")) {
+
+			builder.withClaim("scope", usuario.get("permissoes").replaceAll("\\s+", ""));
+
+		}
+
+		return builder.sign(algorithm);
 	}
 
 }
